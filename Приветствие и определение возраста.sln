@@ -1,16 +1,75 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Приветствие и определение возраста", "Приветствие и определение возраста\Приветствие и определение возраста.csproj", "{CD9E6A12-1EAF-4EDA-BC24-B28476FC6C08}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CD9E6A12-1EAF-4EDA-BC24-B28476FC6C08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD9E6A12-1EAF-4EDA-BC24-B28476FC6C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD9E6A12-1EAF-4EDA-BC24-B28476FC6C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD9E6A12-1EAF-4EDA-BC24-B28476FC6C08}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-EndGlobal
+using System;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string exit = "no";
+            while (exit != "exit")
+            {
+                Console.Write("Введите ваше имя: ");
+                string name = Console.ReadLine();
+
+                Console.WriteLine("Введите день вашего рождения: ");
+                int day = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Введите месяц вашего рождения: ");
+                int month = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Введите год вашего рождения: ");
+                int year = Convert.ToInt32(Console.ReadLine());
+
+                int age;
+
+                if ((day > 31 || day < 1) && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 ||
+                                              month == 10 || month == 12))
+                {
+                    Console.WriteLine("Количество дней в месяце некорректно");
+                }
+                else if ((day > 30 || day < 1) && (month == 4 || month == 6 || month == 9 || month == 11))
+                {
+                    Console.WriteLine("Количество дней в месяце некорректно");
+                }
+                else if ((day == 29) && (month == 2) && ((year % 400 != 0) && (year % 4 != 0)))
+                {
+                    Console.WriteLine("Количество дней в месяце некорректно");
+                }
+                else if ((year < 1920 || year > 2020) || (month < 1 || month > 12))
+                {
+                    Console.WriteLine("Неккоректно количество месяцев или год рождения");
+                }
+                else
+                {
+                    if (month < 9)
+                    {
+                        age = 2020 - year;
+                        Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                    }
+                    else if (month == 9)
+                    {
+                        if (day <= 18)
+                        {
+                            age = 2020 - year;
+                            Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                        }
+                        else
+                        {
+                            age = 2019 - year;
+                            Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                        }
+                    }
+                    else if (month > 9)
+                    {
+                        age = 2019 - year;
+                        Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                    }
+                    Console.Write("Если вы хотите закрыть программу, напишите 'exit', иначе нажмите Enter: ");
+                    exit = Convert.ToString(Console.ReadLine());
+                }
+            }
+        }
+    }
+}
+
