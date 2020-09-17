@@ -7,21 +7,22 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             string exit = "no";
-            while (exit != "exit")
+            while (exit != "exit") // программа цикличная 
             {
                 Console.Write("Введите ваше имя: ");
                 string name = Console.ReadLine();
 
-                Console.WriteLine("Введите день вашего рождения: ");
+                Console.WriteLine("Введите день вашего рождения(числом): ");
                 int day = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine("Введите месяц вашего рождения: ");
+                Console.WriteLine("Введите месяц вашего рождения(числом): ");
                 int month = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine("Введите год вашего рождения: ");
+                Console.WriteLine("Введите год вашего рождения(числом): ");
                 int year = Convert.ToInt32(Console.ReadLine());
 
                 int age;
+                var today = DateTime.Now;
 
                 if ((day > 31 || day < 1) && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 ||
                                               month == 10 || month == 12))
@@ -32,37 +33,47 @@ namespace ConsoleApp2
                 {
                     Console.WriteLine("Количество дней в месяце некорректно");
                 }
-                else if ((day == 29) && (month == 2) && ((year % 400 != 0) && (year % 4 != 0)))
+                else if ((day == 29) && (month == 2) && ((year % 400 == 0) || (year % 4 == 0)))
+                {
+                    age = 2020 - year;
+                    Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                }
+                else if ((day < 1) || (day > 28) && (month == 2))
                 {
                     Console.WriteLine("Количество дней в месяце некорректно");
                 }
-                else if ((year < 1920 || year > 2020) || (month < 1 || month > 12))
+                else if ((year < 1900 || year > 2020) || (month < 1 || month > 12))
                 {
-                    Console.WriteLine("Неккоректно количество месяцев или год рождения");
+                    Console.WriteLine("Неккоректное количество месяцев или год рождения");
                 }
                 else
                 {
-                    if (month < 9)
+                    if (month < today.Month)
                     {
-                        age = 2020 - year;
+                        age = today.Year - year;
                         Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
                     }
-                    else if (month == 9)
+                    else if (month == today.Month)
                     {
-                        if (day <= 18)
+                        if (day < today.Day)
                         {
-                            age = 2020 - year;
+                            age = today.Year - year;
                             Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
+                        }
+                        else if (day == today.Day)
+                        {
+                            age = today.Year - year;
+                            Console.WriteLine("С днем рождения, {0}! Ваш возраст равен {1} лет", name, age);
                         }
                         else
                         {
-                            age = 2019 - year;
+                            age = today.Year - year - 1;
                             Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
                         }
                     }
-                    else if (month > 9)
+                    else if (month > today.Month)
                     {
-                        age = 2019 - year;
+                        age = today.Year - year - 1;
                         Console.WriteLine("Привет, {0}. Ваш возраст равен {1} лет", name, age);
                     }
                     Console.Write("Если вы хотите закрыть программу, напишите 'exit', иначе нажмите Enter: ");
@@ -72,4 +83,3 @@ namespace ConsoleApp2
         }
     }
 }
-
